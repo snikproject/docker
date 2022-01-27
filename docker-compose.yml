@@ -1,0 +1,58 @@
+# SNIK - Toolset
+# Maintainer: Konrad Höffner <konrad.hoeffner@imise.uni-leipzig.de>
+
+services:
+
+  rdf:
+    build: ../ontology
+    volumes:
+      - rdf:/ontology/dist
+
+# Virtuoso:
+  virtuoso:
+    build: ./virtuoso
+    environment:
+      - DBA_PASSWORD=${DBA_PASSWORD}
+      - SPARQL_UPDATE='false'
+      #- DEFAULT_GRAPH=http://hitontology.snik.eu/ontology
+      #- VIRT_Parameters_DirsAllowed=., /usr/local/virtuoso-opensource/share/virtuoso/vad, /virtuoso/data
+    volumes:
+      - virtuoso-data:/data
+      - rdf:/data/toLoad:ro
+    #  - /usr/local/virtuoso-opensource/lib
+    ports:
+      - "127.0.0.1:8102:8890"
+      - "127.0.0.1:8103:1111"
+    restart: unless-stopped
+    #healthcheck:
+    #  test: ["CMD", "curl", "-f", "http://localhost:8890"]
+    depends_on:
+      rdf: 
+        condition: service_completed_successfully
+
+# Access at http://localhost:8104/ontology
+  lodview:
+    # subfolder, uses the master branch of https://github.com/hitontology/lodview
+    # ignore the Dockerfile in the lodview Git repository, it is not used here and may have different settings
+    build: ./lodview
+    #environment:
+      #- LODVIEW_URISPACE=http://www.snik.eu/ontology/
+      #- LODVIEW_PREFIX=meta
+      #LODVIEW_SPARQLENDPOINT: "http://virtuoso:8890/sparql"
+      # for isolated local testing
+      #- LODVIEW_SPARQLENDPOINT=https://www.snik.eu/sparql
+      #- LODVIEW_HOMEURL=http://www.snik.eu/ontology/SoftwareProduct
+      #- LODVIEW_HOME_TITLE=SNIK
+      #- LODVIEW_HOME_ABSTRACT=This is the Abstract 
+      #- LODVIEW_HOME_DESCRIPTION=RDF Browser for SNIK
+      #- LODVIEW_PUBLICURLPREFIX=auto
+    ports:
+      - "127.0.0.1:8104:8080"
+    depends_on: 
+      - virtuoso
+    restart: unless-stopped
+
+volumes:
+  rdf:
+  virtuoso-data:
+
