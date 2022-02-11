@@ -1,38 +1,33 @@
-# SNIK - Toolset
-# Maintainer: Konrad Höffner <konrad.hoeffner@imise.uni-leipzig.de>
+# SNIK - Toolset, Maintainer: Konrad Höffner <konrad.hoeffner@imise.uni-leipzig.de>
 
 services:
 
-  rdf:
-    build: ../ontology
-    volumes:
-      - rdf:/ontology/dist
+#  rdf:
+#    build: ../ontology
+#    volumes:
+#      - rdf:/ontology
 
-# Virtuoso:
   virtuoso:
     build: ./virtuoso
     environment:
       - DBA_PASSWORD=${DBA_PASSWORD}
       - SPARQL_UPDATE='false'
-      #- DEFAULT_GRAPH=http://hitontology.snik.eu/ontology
-      #- VIRT_Parameters_DirsAllowed=., /usr/local/virtuoso-opensource/share/virtuoso/vad, /virtuoso/data
     volumes:
       - virtuoso-data:/data
-      - rdf:/data/toLoad:ro
-    #  - /usr/local/virtuoso-opensource/lib
+      - ../ontology:/data/toLoad:ro
     ports:
       - "127.0.0.1:8102:8890"
       - "127.0.0.1:8103:1111"
     restart: unless-stopped
-    #healthcheck:
-    #  test: ["CMD", "curl", "-f", "http://localhost:8890"]
-    depends_on:
-      rdf: 
-        condition: service_completed_successfully
+
+  graph:
+    environment:
+      - SPARQL_ENDPOINT=http://127.0.0.1:8102/sparql
+    build: ../graph
 
 # Access at http://localhost:8104/ontology
   lodview:
-    # subfolder, uses the master branch of https://github.com/hitontology/lodview
+    # subfolder, uses the master branch of https://github.com/snikproject/lodview
     # ignore the Dockerfile in the lodview Git repository, it is not used here and may have different settings
     build: ./lodview
     #environment:

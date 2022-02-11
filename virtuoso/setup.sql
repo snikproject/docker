@@ -1,3 +1,14 @@
-DB.DBA.XML_SET_NS_DECL ('hito', 'http://hitontology.eu/ontology/', 2);
-DB.DBA.XML_SET_NS_DECL ('dbr', 'http://dbpedia.org/resource/', 2);
-
+DB.DBA.RDF_GRAPH_GROUP_CREATE('http://www.snik.eu/ontology',1);
+DB.DBA.RDF_GRAPH_GROUP_INS ('http://www.snik.eu/ontology', 'http://www.snik.eu/ontology/bb');
+DB.DBA.RDF_GRAPH_GROUP_INS ('http://www.snik.eu/ontology', 'http://www.snik.eu/ontology/ob');
+DB.DBA.RDF_GRAPH_GROUP_INS ('http://www.snik.eu/ontology', 'http://www.snik.eu/ontology/meta');
+DB.DBA.RDF_GRAPH_GROUP_INS ('http://www.snik.eu/ontology', 'http://www.snik.eu/ontology/ciox');
+DB.DBA.RDF_GRAPH_GROUP_INS ('http://www.snik.eu/ontology', 'http://www.snik.eu/ontology/it4it');
+DB.DBA.RDF_GRAPH_GROUP_INS ('http://www.snik.eu/ontology', 'http://www.snik.eu/ontology/he');
+DB.DBA.XML_SET_NS_DECL ('sniko', 'http://www.snik.eu/ontology/', 2);
+DB.DBA.XML_SET_NS_DECL ('meta', 'http://www.snik.eu/ontology/meta/', 2);
+DB.DBA.XML_SET_NS_DECL ('bb', 'http://www.snik.eu/ontology/bb/', 2);
+DB.DBA.XML_SET_NS_DECL ('ob', 'http://www.snik.eu/ontology/ob/', 2);
+DB.DBA.XML_SET_NS_DECL ('he', 'http://www.snik.eu/ontology/he/', 2);
+DB.DBA.XML_SET_NS_DECL ('ciox', 'http://www.snik.eu/ontology/ciox/', 2);
+DB.DBA.XML_SET_NS_DECL ('it4it', 'http://www.snik.eu/ontology/it4it/', 2);
