@@ -1,4 +1,4 @@
-# SNIK - Toolset, Maintainer: Konrad Höffner <konrad.hoeffner@imise.uni-leipzig.de>
+# SNIK-Toolset, Maintainer: Konrad Höffner <konrad.hoeffner@imise.uni-leipzig.de>, originally Sebastian Stäubert  <sebastian.staeubert@imise.uni-leipzig.de>
 
 services:
 
@@ -16,36 +16,43 @@ services:
       - virtuoso-data:/data
       - ../ontology:/data/toLoad:ro
     ports:
-      - "127.0.0.1:8102:8890"
-      - "127.0.0.1:8103:1111"
+      - "127.0.0.1:8081:8890"
+      - "127.0.0.1:1111:1111"
     restart: unless-stopped
 
   graph:
-    environment:
-      - SPARQL_ENDPOINT=http://127.0.0.1:8102/sparql
-    build: ../graph
+    build:
+      context: ../graph
+      args:
+      # client side, so we use the port on the local machine
+        - SPARQL_ENDPOINT=http://127.0.0.1:8081/sparql
+    ports:
+      - "127.0.0.1:8043:8043"
+    depends_on: 
+      - virtuoso
 
-# Access at http://localhost:8104/ontology
+# Access at http://localhost:8889/ontology
   lodview:
     # subfolder, uses the master branch of https://github.com/snikproject/lodview
     # ignore the Dockerfile in the lodview Git repository, it is not used here and may have different settings
-    build: ./lodview
-    #environment:
-      #- LODVIEW_URISPACE=http://www.snik.eu/ontology/
-      #- LODVIEW_PREFIX=meta
-      #LODVIEW_SPARQLENDPOINT: "http://virtuoso:8890/sparql"
-      # for isolated local testing
-      #- LODVIEW_SPARQLENDPOINT=https://www.snik.eu/sparql
-      #- LODVIEW_HOMEURL=http://www.snik.eu/ontology/SoftwareProduct
-      #- LODVIEW_HOME_TITLE=SNIK
-      #- LODVIEW_HOME_ABSTRACT=This is the Abstract 
-      #- LODVIEW_HOME_DESCRIPTION=RDF Browser for SNIK
-      #- LODVIEW_PUBLICURLPREFIX=auto
+    build:
+      context: ./lodview
+      args:
+      # server side, so we use the port on the internal port
+        - SPARQL_ENDPOINT=http://virtuoso:8890/sparql
     ports:
-      - "127.0.0.1:8104:8080"
+      - "127.0.0.1:8889:8080"
     depends_on: 
       - virtuoso
     restart: unless-stopped
+
+#  triplecheckmate:
+#    build: ./TripleCheckMate
+#    ports:
+#      - "127.0.0.1:8888:8080"
+#    links:
+#      - virtuoso
+#    restart: unless-stopped
 
 volumes:
   rdf:
