@@ -11,8 +11,21 @@ services:
       - virtuoso-data:/data
       - ../ontology:/data/toLoad:ro
     ports:
-      - "127.0.0.1:8081:8890"
+      - "127.0.0.1:8080:8890"
       - "127.0.0.1:1111:1111"
+    restart: unless-stopped
+
+  # http://localhost:8889/ontology
+  lodview:
+    build: ../lodview
+    profiles: ["lodview"]
+    environment:
+      # server side, so we use the port on the internal port
+      - LodViewendpoint=http://virtuoso:8890/sparql
+    ports:
+      - "127.0.0.1:8889:8080"
+    depends_on: 
+      - virtuoso
     restart: unless-stopped
 
   graph:
@@ -20,24 +33,13 @@ services:
       context: ../graph
       args:
         # client side, so we use the port on the local machine
-        - SPARQL_ENDPOINT=http://127.0.0.1:8081/sparql
+        - SPARQL_ENDPOINT=http://127.0.0.1:8080/sparql
+    profiles: ["graph"]
     ports:
       - "127.0.0.1:8043:8043"
     depends_on: 
       - virtuoso
 
-  # http://localhost:8889/ontology
-  lodview:
-    build:
-      context: ../lodview
-      args:
-        # server side, so we use the port on the internal port
-        - SPARQL_ENDPOINT=http://virtuoso:8890/sparql
-    ports:
-      - "127.0.0.1:8889:8080"
-    depends_on: 
-      - virtuoso
-    restart: unless-stopped
 
 volumes:
   virtuoso-data:
