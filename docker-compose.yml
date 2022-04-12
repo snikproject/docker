@@ -30,6 +30,7 @@ services:
   # http://localhost:8889/ontology
   lodview:
     build: ../lodview
+    profiles: ["lodview"]
     environment:
       # server side, so we use the port on the internal port
       - LodViewendpoint=http://virtuoso:8890/sparql
@@ -37,6 +38,13 @@ services:
       - "127.0.0.1:8889:8080"
     depends_on: 
       - virtuoso
+    restart: unless-stopped
+
+  snik.eu:
+    build: ../snik.eu
+    profiles: ["snik.eu"]
+    ports:
+      - "127.0.0.1:8055:8080"
     restart: unless-stopped
 
 volumes:
