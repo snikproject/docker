@@ -2,11 +2,6 @@
 
 services:
 
-#  rdf:
-#    build: ../ontology
-#    volumes:
-#      - rdf:/ontology
-
   virtuoso:
     build: ./virtuoso
     environment:
@@ -24,21 +19,19 @@ services:
     build:
       context: ../graph
       args:
-      # client side, so we use the port on the local machine
+        # client side, so we use the port on the local machine
         - SPARQL_ENDPOINT=http://127.0.0.1:8081/sparql
     ports:
       - "127.0.0.1:8043:8043"
     depends_on: 
       - virtuoso
 
-# Access at http://localhost:8889/ontology
+  # http://localhost:8889/ontology
   lodview:
-    # subfolder, uses the master branch of https://github.com/snikproject/lodview
-    # ignore the Dockerfile in the lodview Git repository, it is not used here and may have different settings
     build:
       context: ../lodview
       args:
-      # server side, so we use the port on the internal port
+        # server side, so we use the port on the internal port
         - SPARQL_ENDPOINT=http://virtuoso:8890/sparql
     ports:
       - "127.0.0.1:8889:8080"
@@ -47,6 +40,4 @@ services:
     restart: unless-stopped
 
 volumes:
-  rdf:
   virtuoso-data:
-
