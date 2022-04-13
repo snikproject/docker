@@ -24,7 +24,7 @@ services:
       - LodViewendpoint=http://virtuoso:8890/sparql
     ports:
       - "127.0.0.1:8889:8080"
-    depends_on: 
+    depends_on:
       - virtuoso
     restart: unless-stopped
 
@@ -37,9 +37,16 @@ services:
     profiles: ["graph"]
     ports:
       - "127.0.0.1:8043:8043"
-    depends_on: 
+    depends_on:
       - virtuoso
 
+  proxy:
+    image: caddy:2-alpine
+    profiles: ["proxy"]
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+    ports:
+      - "127.0.0.1:80:80"
 
 volumes:
   virtuoso-data:
