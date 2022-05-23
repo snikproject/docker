@@ -27,7 +27,7 @@ services:
 
   # http://localhost:8889/ontology
   lodview:
-    build: ../lodview
+    build: ./lodview
     profiles: ["lodview"]
     environment:
       # server side, so we use the port on the internal port
@@ -40,7 +40,7 @@ services:
 
   graph:
     build:
-      context: ../graph
+      context: ./graph
       args:
         # client side, so we use the port on the local machine
         - SPARQL_ENDPOINT=http://127.0.0.1:8080/sparql
