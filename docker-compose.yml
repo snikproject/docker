@@ -25,13 +25,20 @@ services:
       - "127.0.0.1:1111:1111"
     restart: unless-stopped
 
-  # http://localhost:8889/ontology
-  lodview:
-    build: ./lodview
-    profiles: ["lodview"]
+  rickview:
+    build: ./rickview
     environment:
-      # server side, so we use the port on the internal port
-      - LodViewendpoint=http://virtuoso:8890/sparql
+      - RICKVIEW_KB_FILE=/ontology/bb.ttl
+      - RICKVIEW_BASE_PATH=/ontology
+      - RICKVIEW_TITLE=SNIK
+      - RICKVIEW_SUBTITLE=Semantic Network of Information Management in Hospitals
+      - RICKVIEW_EXAMPLES=/meta/Top /meta/EntityType /meta/Function meta/Role bb/ChiefExecutiveOfficer ob/ChiefInformationOfficer
+      - RICKVIEW_HOMEPAGE=https://www.snik.eu
+      - RICKVIEW_ENDPOINT=https://www.snik.eu/sparql
+      - RICKVIEW_GITHUB=https://github.com/snikproject/ontology
+    volumes:
+      - ./ontology:/ontology
+    profiles: ["rickview"]
     ports:
       - "127.0.0.1:8889:8080"
     depends_on:

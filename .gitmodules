@@ -3,13 +3,13 @@
 	url = git@github.com:snikproject/ontology.git
 	ignore = untracked
 	branch = master
-[submodule "lodview"]
-	path = lodview
-	url = git@github.com:snikproject/lodview
-	ignore = untracked
-	branch = master
 [submodule "graph"]
 	path = graph
 	url = git@github.com:snikproject/graph
+	ignore = untracked
+	branch = master
+[submodule "rickview"]
+	path = rickview
+	url = git@github.com:konradhoeffner/rickview
 	ignore = untracked
 	branch = master

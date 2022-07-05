@@ -2,6 +2,6 @@ http://localhost
 
 reverse_proxy /sparql* virtuoso:8890
 reverse_proxy /conductor* virtuoso:8890
-reverse_proxy /ontology* lodview:8080
+reverse_proxy /ontology* rickview:8080
 reverse_proxy /* graph:8043
 rewrite /graph* /
