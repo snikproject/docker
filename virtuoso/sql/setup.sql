@@ -1,4 +1,6 @@
+log_message('Setup: Activate CORS');
 update DB.DBA.HTTP_PATH set HP_OPTIONS = serialize(vector('browse_sheet', '', 'noinherit', 'yes', 'cors', '*', 'cors_restricted', 0))  where HP_LPATH = '/sparql';
+log_message('Setup: Create graphs and graph group http://www.snik.eu/ontology');
 DB.DBA.RDF_GRAPH_GROUP_CREATE('http://www.snik.eu/ontology',1);
 DB.DBA.RDF_GRAPH_GROUP_INS ('http://www.snik.eu/ontology', 'http://www.snik.eu/ontology/bb');
 DB.DBA.RDF_GRAPH_GROUP_INS ('http://www.snik.eu/ontology', 'http://www.snik.eu/ontology/ob');
@@ -13,3 +15,8 @@ DB.DBA.XML_SET_NS_DECL ('ob', 'http://www.snik.eu/ontology/ob/', 2);
 DB.DBA.XML_SET_NS_DECL ('he', 'http://www.snik.eu/ontology/he/', 2);
 DB.DBA.XML_SET_NS_DECL ('ciox', 'http://www.snik.eu/ontology/ciox/', 2);
 DB.DBA.XML_SET_NS_DECL ('it4it', 'http://www.snik.eu/ontology/it4it/', 2);
+log_message('Setup: Load data from .ttl and .nt files');
+ld_dir_all ('data', '*.ttl', 'no-graph-ttl');
+ld_dir_all ('data', '*.nt', 'no-graph-nt');
+rdf_loader_run();
+log_message('Setup: Finished');
