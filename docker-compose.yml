@@ -6,7 +6,6 @@ services:
     image: openlink/virtuoso-opensource-7
     environment:
       - DBA_PASSWORD=${DBA_PASSWORD}
-      #- SPARQL_UPDATE='false'
       - VIRTUOSO_INI_FILE=/ini/virtuoso.ini
     volumes:
       - ./ontology:/database/data
