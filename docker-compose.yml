@@ -3,13 +3,16 @@
 services:
 
   virtuoso:
-    build: ./virtuoso
+    image: openlink/virtuoso-opensource-7
     environment:
       - DBA_PASSWORD=${DBA_PASSWORD}
-      - SPARQL_UPDATE='false'
+      #- SPARQL_UPDATE='false'
+      - VIRTUOSO_INI_FILE=/ini/virtuoso.ini
     volumes:
-      - virtuoso-data:/data
-      - ../ontology:/data/toLoad:ro
+      - ./ontology:/database/data
+      - ./virtuoso/ini:/ini
+      - ./virtuoso/sql:/opt/virtuoso-opensource/initdb.d
+      #- virtuoso-data:/database/data
     ports:
       - "127.0.0.1:8080:8890"
       - "127.0.0.1:1111:1111"
@@ -48,5 +51,5 @@ services:
     ports:
       - "127.0.0.1:80:80"
 
-volumes:
-  virtuoso-data:
+#volumes:
+#  virtuoso-data:
