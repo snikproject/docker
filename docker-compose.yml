@@ -6,22 +6,13 @@ services:
     image: openlink/virtuoso-opensource-7
     environment:
       - DBA_PASSWORD=${DBA_PASSWORD}
-      - VIRT_DATABASE_ERRORLOGLEVEL=3
-      - VIRT_PARAMETERS_NUMBEROFBUFFERS=10000
-      - VIRT_PARAMETERS_MAXDIRTYBUFFERS=6000
-      - VIRT_HTTPSERVER_SERVERPORT=8890
-      - VIRT_SPARQL_DEFAULTGRAPH=http://www.snik.eu/ontology
-      - VIRT_SPARQL_RESULTSETMAXROWS=50000
-      - VIRT_SPARQL_MAXQUERYCOSTESTIMATIONTIME=400
-      - VIRT_SPARQL_MAXQUERYEXECUTIONTIME=120
-      - VIRT_SPARQL_DEFAULTQUERY=select distinct * {?s a meta:Role.} LIMIT 100
-      - VIRT_PLUGINS_-=-
+      #- SPARQL_UPDATE='false'
+      - VIRTUOSO_INI_FILE=/ini/virtuoso.ini
     volumes:
       - ./ontology:/database/data
-      - ./virtuoso:/opt/virtuoso-opensource/initdb.d
+      - ./virtuoso/ini:/ini
+      - ./virtuoso/sql:/opt/virtuoso-opensource/initdb.d
       #- virtuoso-data:/database/data
-      - ./ontology:/data/toLoad:ro
-    profiles: ["virtuoso", "graph", "lodview"]
     ports:
       - "127.0.0.1:8080:8890"
       - "127.0.0.1:1111:1111"
