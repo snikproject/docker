@@ -20,29 +20,39 @@ services:
       - ./ontology:/database/data
       - ./virtuoso:/opt/virtuoso-opensource/initdb.d
       #- virtuoso-data:/database/data
+      - ./ontology:/data/toLoad:ro
+    profiles: ["virtuoso", "graph", "lodview"]
     ports:
       - "127.0.0.1:8080:8890"
       - "127.0.0.1:1111:1111"
-    restart: unless-stopped
+
+  ontology:
+    build: ./ontology
+    volumes:
+      - rdf:/ontology/dist
+    profiles: ["rickview"]
 
   rickview:
     build: ./rickview
     environment:
-      - RICKVIEW_KB_FILE=/ontology/bb.ttl
+      - RICKVIEW_KB_FILE=/rdf/snik.ttl
+      - RICKVIEW_PREFIX=sniko
+      - RICKVIEW_NAMESPACE=http://www.snik.eu/ontology/
       - RICKVIEW_BASE_PATH=/ontology
       - RICKVIEW_TITLE=SNIK
       - RICKVIEW_SUBTITLE=Semantic Network of Information Management in Hospitals
-      - RICKVIEW_EXAMPLES=/meta/Top /meta/EntityType /meta/Function meta/Role bb/ChiefExecutiveOfficer ob/ChiefInformationOfficer
+      - RICKVIEW_EXAMPLES=meta bb ob meta/Top meta/EntityType meta/Function meta/Role bb/ChiefExecutiveOfficer ob/ChiefInformationOfficer
       - RICKVIEW_HOMEPAGE=https://www.snik.eu
       - RICKVIEW_ENDPOINT=https://www.snik.eu/sparql
       - RICKVIEW_GITHUB=https://github.com/snikproject/ontology
     volumes:
-      - ./ontology:/ontology
+      - rdf:/rdf
+      - ./rickview.toml:/app/data/config.toml
     profiles: ["rickview"]
     ports:
       - "127.0.0.1:8889:8080"
     depends_on:
-      - virtuoso
+      - ontology
     restart: unless-stopped
 
   graph:
@@ -65,5 +75,6 @@ services:
     ports:
       - "127.0.0.1:80:80"
 
-#volumes:
-#  virtuoso-data:
+volumes:
+  #virtuoso-data: # uncomment to persist the virtuoso volume but then you need to delete the volume when the ontology updates
+  rdf:
