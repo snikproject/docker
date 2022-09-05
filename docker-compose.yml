@@ -33,7 +33,7 @@ services:
     profiles: ["rickview"]
 
   rickview:
-    build: ./rickview
+    image: ghcr.io/konradhoeffner/rickview:master
     environment:
       - RICKVIEW_KB_FILE=/rdf/snik.ttl
       - RICKVIEW_PREFIX=sniko
@@ -45,6 +45,8 @@ services:
       - RICKVIEW_HOMEPAGE=https://www.snik.eu
       - RICKVIEW_ENDPOINT=https://www.snik.eu/sparql
       - RICKVIEW_GITHUB=https://github.com/snikproject/ontology
+      - RICKVIEW_DOC=https://snikproject.github.io/ontology/index-en.html
+      - CARGO_INCREMENTAL=0
     volumes:
       - rdf:/rdf
       - ./rickview.toml:/app/data/config.toml

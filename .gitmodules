@@ -8,8 +8,3 @@
 	url = git@github.com:snikproject/graph
 	ignore = untracked
 	branch = master
-[submodule "rickview"]
-	path = rickview
-	url = git@github.com:konradhoeffner/rickview
-	ignore = untracked
-	branch = master
