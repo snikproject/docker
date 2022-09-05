@@ -38,7 +38,7 @@ services:
       - RICKVIEW_KB_FILE=/rdf/snik.ttl
       - RICKVIEW_PREFIX=sniko
       - RICKVIEW_NAMESPACE=http://www.snik.eu/ontology/
-      - RICKVIEW_BASE_PATH=/ontology
+      - RICKVIEW_BASE=/ontology
       - RICKVIEW_TITLE=SNIK
       - RICKVIEW_SUBTITLE=Semantic Network of Information Management in Hospitals
       - RICKVIEW_EXAMPLES=meta bb ob meta/Top meta/EntityType meta/Function meta/Role bb/ChiefExecutiveOfficer ob/ChiefInformationOfficer
