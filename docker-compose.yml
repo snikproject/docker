@@ -45,7 +45,7 @@ services:
       - RICKVIEW_HOMEPAGE=https://www.snik.eu
       - RICKVIEW_ENDPOINT=https://www.snik.eu/sparql
       - RICKVIEW_GITHUB=https://github.com/snikproject/ontology
-      - RICKVIEW_DOC=https://snikproject.github.io/ontology/index-en.html
+      - RICKVIEW_DOC=https://snikproject.github.io/ontology/
       - CARGO_INCREMENTAL=0
     volumes:
       - rdf:/rdf
