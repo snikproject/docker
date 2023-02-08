@@ -25,6 +25,7 @@ services:
     ports:
       - "127.0.0.1:8080:8890"
       - "127.0.0.1:1111:1111"
+    restart: unless-stopped
 
   ontology:
     build: ./ontology
