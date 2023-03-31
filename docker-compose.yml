@@ -18,8 +18,8 @@ services:
       - VIRT_PLUGINS_-=-
     volumes:
       - ./ontology:/database/data
-      - ./virtuoso:/opt/virtuoso-opensource/initdb.d
-      #- virtuoso-data:/database/data
+      - ./virtuoso:/opt/virtuoso-opensource/initdb.d:ro
+    profiles: ["virtuoso", "graph", "lodview"]
     ports:
       - "127.0.0.1:8080:8890"
       - "127.0.0.1:1111:1111"
