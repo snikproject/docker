@@ -1,6 +1,7 @@
 log_message('Setup: Activate CORS');
 update DB.DBA.HTTP_PATH set HP_OPTIONS = serialize(vector('browse_sheet', '', 'noinherit', 'yes', 'cors', '*', 'cors_restricted', 0))  where HP_LPATH = '/sparql';
 log_message('Setup: Create graphs and graph group http://www.snik.eu/ontology');
+DB.DBA.RDF_DEFAULT_USER_PERMS_SET ('nobody', 9);
 DB.DBA.RDF_GRAPH_GROUP_CREATE('http://www.snik.eu/ontology',1);
 DB.DBA.RDF_GRAPH_GROUP_INS ('http://www.snik.eu/ontology', 'http://www.snik.eu/ontology/bb');
 DB.DBA.RDF_GRAPH_GROUP_INS ('http://www.snik.eu/ontology', 'http://www.snik.eu/ontology/ob');

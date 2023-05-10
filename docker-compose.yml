@@ -3,7 +3,7 @@
 services:
 
   virtuoso:
-    image: openlink/virtuoso-opensource-7:7.2.7 # 7.2.8 and 7.2.9 don't work with the graph group
+    image: openlink/virtuoso-opensource-7:7.2.9
     environment:
       - DBA_PASSWORD=${DBA_PASSWORD}
       - VIRT_DATABASE_ERRORLOGLEVEL=3
