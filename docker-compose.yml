@@ -32,6 +32,10 @@ services:
     environment:
       # server side, so we use the port on the internal port
       - LodViewendpoint=http://virtuoso:8890/sparql
+    ulimits:
+      nofile:
+        soft: "65536"
+        hard: "65536"
     ports:
       - "127.0.0.1:8889:8080"
     depends_on:
