@@ -3,7 +3,7 @@
 services:
 
   virtuoso:
-    image: openlink/virtuoso-opensource-7
+    image: pkleef/virtuoso-opensource-7
     environment:
       - DBA_PASSWORD=${DBA_PASSWORD}
       - VIRT_DATABASE_ERRORLOGLEVEL=3
@@ -15,6 +15,7 @@ services:
       - VIRT_SPARQL_MAXQUERYCOSTESTIMATIONTIME=400
       - VIRT_SPARQL_MAXQUERYEXECUTIONTIME=120
       - VIRT_SPARQL_DEFAULTQUERY=select distinct * {?s a meta:Role.} LIMIT 100
+      - VIRT_HTTPSERVER_ENABLEDGZIPCONTENT=1
       - VIRT_PLUGINS_-=-
     volumes:
       - ./ontology:/database/data

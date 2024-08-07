@@ -20,4 +20,5 @@ log_message('Setup: Load data from .ttl and .nt files');
 ld_dir_all ('data', '*.ttl', NULL);
 ld_dir_all ('data', '*.nt', NULL);
 rdf_loader_run();
+http_enable_gz(1);
 log_message('Setup: Finished');
