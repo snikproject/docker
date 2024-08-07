@@ -15,6 +15,7 @@ services:
       - VIRT_SPARQL_MAXQUERYCOSTESTIMATIONTIME=400
       - VIRT_SPARQL_MAXQUERYEXECUTIONTIME=120
       - VIRT_SPARQL_DEFAULTQUERY=select distinct * {?s a meta:Role.} LIMIT 100
+      - VIRT_HTTPSERVER_ENABLEDGZIPCONTENT=1
       - VIRT_PLUGINS_-=-
     volumes:
       - ./ontology:/database/data
