@@ -18,6 +18,8 @@ services:
       - VIRT_HTTPSERVER_ENABLEDGZIPCONTENT=1
       - VIRT_PLUGINS_-=-
     volumes:
+      # Virtuoso loads each nt and ttl file from the local ontology directory separately in the appropriate graph.
+      # Not to be confused with the ontology service, which is only shortly created to fill the "rdf" volume used by RickView.
       - ./ontology:/database/data
       - ./virtuoso:/opt/virtuoso-opensource/initdb.d:ro
     profiles: ["virtuoso", "graph", "lodview"]
@@ -26,6 +28,7 @@ services:
       - "127.0.0.1:1111:1111"
     restart: unless-stopped
 
+  # singular snik.ttl output of the combine script is only used by RickView
   ontology:
     build: ./ontology
     volumes:
