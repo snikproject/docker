@@ -6,6 +6,7 @@ Docker (compose) setup for the SNIK Graph, SPARQL endpoint and a RickView instan
 * Run the following script:
 ```
 git clone git@github.com:snikproject/docker.git
+cd docker
 git submodule update --init
 cp .env.dist .env
 docker compose up --build
