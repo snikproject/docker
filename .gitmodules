@@ -5,6 +5,6 @@
 	branch = master
 [submodule "graph"]
 	path = graph
-	url = git@github.com:snikproject/graph
+	url = git@github.com:snikproject/graph.git
 	ignore = untracked
 	branch = master
