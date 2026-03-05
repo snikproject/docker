@@ -28,15 +28,12 @@ services:
       - "127.0.0.1:1111:1111"
     restart: unless-stopped
 
-  # singular snik.ttl output of the combine script is only used by RickView
-  ontology:
-    build: ./ontology
-    volumes:
-      - rdf:/ontology/dist
-    profiles: ["rickview"]
-
   rickview:
-    image: ghcr.io/konradhoeffner/rickview:master
+    build:
+      context: .
+      additional_contexts:
+        - ontology=./ontology
+      dockerfile: Dockerfile.rickview
     environment:
       - RICKVIEW_KB_FILE=/rdf/snik.ttl
       - RICKVIEW_PREFIX=sniko
@@ -51,13 +48,10 @@ services:
       - RICKVIEW_DOC=https://snikproject.github.io/ontology/
       - CARGO_INCREMENTAL=0
     volumes:
-      - rdf:/rdf
       - ./rickview.toml:/app/data/config.toml
     profiles: ["rickview"]
     ports:
       - "127.0.0.1:8889:8080"
-    depends_on:
-      - ontology
     restart: unless-stopped
 
   graph:
@@ -81,6 +75,5 @@ services:
     ports:
       - "127.0.0.1:80:80"
 
-volumes:
+#volumes:
   #virtuoso-data: # uncomment to persist the virtuoso volume but then you need to delete the volume when the ontology updates
-  rdf:
