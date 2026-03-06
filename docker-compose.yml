@@ -7,8 +7,8 @@ services:
     environment:
       - DBA_PASSWORD=${DBA_PASSWORD}
       - VIRT_DATABASE_ERRORLOGLEVEL=3
-      - VIRT_PARAMETERS_NUMBEROFBUFFERS=10000
-      - VIRT_PARAMETERS_MAXDIRTYBUFFERS=6000
+      - VIRT_PARAMETERS_NUMBEROFBUFFERS=${VIRT_PARAMETERS_NUMBEROFBUFFERS}
+      - VIRT_PARAMETERS_MAXDIRTYBUFFERS=${VIRT_PARAMETERS_MAXDIRTYBUFFERS}
       - VIRT_HTTPSERVER_SERVERPORT=8890
       - VIRT_SPARQL_DEFAULTGRAPH=http://www.snik.eu/ontology
       - VIRT_SPARQL_RESULTSETMAXROWS=50000
@@ -18,8 +18,7 @@ services:
       - VIRT_HTTPSERVER_ENABLEDGZIPCONTENT=1
       - VIRT_PLUGINS_-=-
     volumes:
-      # Virtuoso loads each nt and ttl file from the local ontology directory separately in the appropriate graph.
-      # Not to be confused with the ontology service, which is only shortly created to fill the "rdf" volume used by RickView.
+      # Virtuoso loads each nt and ttl file from the local ontology directory separately into the appropriate graph.
       - ./ontology:/database/data
       - ./virtuoso:/opt/virtuoso-opensource/initdb.d:ro
     profiles: ["virtuoso", "graph", "lodview"]
@@ -54,6 +53,15 @@ services:
       - "127.0.0.1:8889:8080"
     restart: unless-stopped
 
+  # Because SNIK graph doesn't have a backend (except the SPARQL endpoint), we currently do not use this profile on our server.
+  # Instead, we use the GitHub CI to deploy static HTML/JavaScript into the "static" branch, which uses https://snik.eu/sparql by default and check that out into /var/www/... on the server.
+  # Then, we use the Apache reverse proxy that the server uses anyways to publish it at https://snik.eu/graph/.
+  # However we use the graph profile for local testing with "fresh" data from the SPARQL endpoint.
+  # You can also check out SNIK graph separately and test that locally using npm or its own Docker container.
+  # However then you are using the data from https://snik.eu/sparql which may be unavailable or out of date, if you develop SNIK Graph and the ontology at the same time.
+  # But if you want to use our Semantic Web project setup as a baseline and have different conditions or sensibilities, feel free to use this profile in production.
+  # Analogously, the SNIK base website from https://github.com/snikproject/snik.eu is also deployed into the "static branch" and https://snik.eu.
+  # The Markdown-based SNIK website is not included in the docker compose setup because it doesn't have an external dependency like the SPARQL endpoint but it could in theory be integrated here as well.
   graph:
     build:
       context: .
