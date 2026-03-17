@@ -28,13 +28,9 @@ services:
     restart: unless-stopped
 
   rickview:
-    build:
-      context: .
-      additional_contexts:
-        - ontology=./ontology
-      dockerfile: Dockerfile.rickview
+    image: ghcr.io/konradhoeffner/rickview:master
     environment:
-      - RICKVIEW_KB_FILE=/rdf/snik.ttl
+      - RICKVIEW_KB_FILE=/ontology/
       - RICKVIEW_PREFIX=sniko
       - RICKVIEW_NAMESPACE=http://www.snik.eu/ontology/
       - RICKVIEW_BASE=/ontology
@@ -47,6 +43,7 @@ services:
       - RICKVIEW_DOC=https://snikproject.github.io/ontology/
       - CARGO_INCREMENTAL=0
     volumes:
+      - ./ontology/:/ontology/
       - ./rickview.toml:/app/data/config.toml
     profiles: ["rickview"]
     ports:
