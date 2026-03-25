@@ -51,13 +51,14 @@ services:
     restart: unless-stopped
 
   # Because SNIK graph doesn't have a backend (except the SPARQL endpoint), we currently do not use this profile on our server.
-  # Instead, we use the GitHub CI to deploy static HTML/JavaScript into the "static" branch, which uses https://snik.eu/sparql by default and check that out into /var/www/... on the server.
-  # Then, we use the Apache reverse proxy that the server uses anyways to publish it at https://snik.eu/graph/.
+  # Instead, we use the GitHub CI to deploy static HTML/JavaScript into the "static" branch, which uses https://www.snik.eu/sparql by default and check that out into /var/www/... on the server.
+  # Then, we use the Apache reverse proxy that the server uses anyways to publish it at https://www.snik.eu/graph/.
+  # We also sometimes host a development version to test new features at https://www.snik.eu/pgraph/.
   # However we use the graph profile for local testing with "fresh" data from the SPARQL endpoint.
   # You can also check out SNIK graph separately and test that locally using npm or its own Docker container.
-  # However then you are using the data from https://snik.eu/sparql which may be unavailable or out of date, if you develop SNIK Graph and the ontology at the same time.
+  # However then you are using the data from https://www.snik.eu/sparql which may be unavailable or out of date, if you develop SNIK Graph and the ontology at the same time.
   # But if you want to use our Semantic Web project setup as a baseline and have different conditions or sensibilities, feel free to use this profile in production.
-  # Analogously, the SNIK base website from https://github.com/snikproject/snik.eu is also deployed into the "static branch" and https://snik.eu.
+  # Analogously, the SNIK base website from https://github.com/snikproject/www.snik.eu is also deployed into the "static branch" and https://www.snik.eu.
   # The Markdown-based SNIK website is not included in the docker compose setup because it doesn't have an external dependency like the SPARQL endpoint but it could in theory be integrated here as well.
   graph:
     build:

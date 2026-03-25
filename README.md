@@ -1,6 +1,7 @@
 # SNIK Container Infrastructure
 
 Docker (compose) setup for the SNIK Graph, SPARQL endpoint and a RickView instance.
+Note that we currently publish SNIK Graph without Docker in production, see [docker-compose.yml](./docker-compose.yml) for details.
 
 ## Setup
 * Run the following script:
