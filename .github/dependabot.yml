@@ -9,7 +9,7 @@ updates:
       include: 'scope'
     assignees: ["KonradHoeffner"]
     schedule:
-      interval: "weekly"
+      interval: "daily"
       time: "07:30"
       timezone: "Europe/Berlin"
     cooldown:
