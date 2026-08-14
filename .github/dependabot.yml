@@ -12,6 +12,8 @@ updates:
       interval: "weekly"
       time: "07:30"
       timezone: "Europe/Berlin"
+    cooldown:
+      default-days: 0
   - package-ecosystem: "gitsubmodule"
     directory: "/"
     commit-message:
@@ -22,3 +24,5 @@ updates:
       interval: "daily"
       time: "07:30"
       timezone: "Europe/Berlin"
+    cooldown:
+      default-days: 0
