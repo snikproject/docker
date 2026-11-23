@@ -62,8 +62,8 @@ services:
   # The Markdown-based SNIK website is not included in the docker compose setup because it doesn't have an external dependency like the SPARQL endpoint but it could in theory be integrated here as well.
   graph:
     build:
-      context: .
-      dockerfile: graph/Dockerfile.submodule
+      context: ./graph
+      dockerfile: Dockerfile
       args:
         # client side, so we use the port on the local machine
         - SPARQL_ENDPOINT=http://127.0.0.1:8080/sparql
