@@ -63,7 +63,6 @@ services:
   graph:
     build:
       context: ./graph
-      dockerfile: Dockerfile
       args:
         # client side, so we use the port on the local machine
         - SPARQL_ENDPOINT=http://127.0.0.1:8080/sparql
