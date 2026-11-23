@@ -1,7 +1,12 @@
 http://localhost
 
+encode zstd gzip
+
 reverse_proxy /sparql* virtuoso:8890
 reverse_proxy /conductor* virtuoso:8890
+# RickView serves the ontology repository at /ontology/.
 reverse_proxy /ontology* rickview:8080
+# The graph serves its own ontology files at /graph-ontology/.
 reverse_proxy /* graph:8043
-rewrite /graph* /
+rewrite /graph /
+rewrite /graph/* /
