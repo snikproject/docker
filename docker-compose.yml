@@ -21,7 +21,7 @@ services:
       # Virtuoso loads each nt and ttl file from the local ontology directory separately into the appropriate graph.
       - ./ontology:/database/data
       - ./virtuoso:/opt/virtuoso-opensource/initdb.d:ro
-    profiles: ["virtuoso", "graph", "lodview"]
+    profiles: ["virtuoso", "lodview"]
     ports:
       - "127.0.0.1:8080:8890"
       - "127.0.0.1:1111:1111"
@@ -69,8 +69,6 @@ services:
     profiles: ["graph"]
     ports:
       - "127.0.0.1:8043:8043"
-    depends_on:
-      - virtuoso
 
   proxy:
     image: caddy:2-alpine
